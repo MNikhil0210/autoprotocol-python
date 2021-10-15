@@ -38,7 +38,7 @@ class Well(object):
 
     def __init__(self, container, index):
         self.container = container
-        self.index = index
+        self.index = int(index)
         self.volume = None
         self.mass = None
         self.name = None
