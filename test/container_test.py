@@ -321,6 +321,18 @@ class TestAliquotProperties(HasDummyContainers):
         assert self.c.well(0).properties == test_property
         assert self.c.well(0).ctx_properties.get("foo") == "bar"
         assert self.c.well(0).ctx_properties.foo == "bar"
+        test_property["foo"] = {"key": "val"}
+        self.c.well(0).set_ctx_properties(test_property)
+        assert self.c.well(0).ctx_properties.toDict() == test_property
+
+        with pytest.raises(TypeError):
+            self.c.well(0).ctx_properties.get(0)
+
+        with pytest.raises(TypeError):
+            self.c.well(0).set_ctx_properties({0: "valuable value"})
+
+        with pytest.raises(TypeError):
+            self.c.well(0).set_ctx_properties({self.c: "valuable value"})
 
     def test_wellgroups(self):
         test_property = {"foo": "bar"}
